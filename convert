@@ -1,0 +1,10 @@
+#!/bin/bash
+exec 42< $1
+while read video_title <&42 ; do
+  read video_url <&42
+  read video_filename <&42
+  echo $video_url
+  ffmpeg -i "$video_filename" "$video_filename.wav"
+  lame "$video_filename.wav" "$video_title.mp3"
+  rm -f "$video_filename" "$video_filename.wav"
+done
